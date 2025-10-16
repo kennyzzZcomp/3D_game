@@ -16,10 +16,10 @@ void setup() {
   
   balls = new ArrayList<Ball>();
   
-  textures = new PImage[3];
+  textures = new PImage[6];
   
   // Load texture images
-  String[] textureFiles = {"Wood.jpg", "Metal.jpg", "Rock.jpg"};
+  String[] textureFiles = {"Wood.jpg", "Metal.jpg", "Rock.jpg", "Ground.jpg", "Bricks.jpg","Bricks1.jpg"};
   int loadedCount = 0;
   
   for (int i = 0; i < textureFiles.length; i++) {
@@ -201,7 +201,7 @@ class Ball{
         acc.set(0, 0, 0);
 
         // Apply gravity
-        acc.y = GRAV / 50.0;
+        acc.y = GRAV / 10.0;
 
         // Apply initial boost (first few frames)
         if (currentFrame < boostFrames) {
@@ -220,6 +220,7 @@ class Ball{
 
         // Update linear physics
         vel.add(acc);
+        //vel.add(PVector.mult(acc, 1.0f/60)); // Assuming 60 FPS for smoother motion
         
         energyLevel *= 0.999f; 
         float dampingFactor = LIN_DAMP + (1 - energyLevel) * 0.05f; 
@@ -530,7 +531,7 @@ void displayInfo() {
     for (PImage tex : textures) {
         if (tex != null) loadedTextures++;
     }
-    text("Textures loaded: " + loadedTextures + "/3", 10, 165);
+    text("Textures loaded: " + loadedTextures + "/6", 10, 165);
     if (loadedTextures > 0) {
         text("✓ Using PNG textures", 10, 185);
     } else {
@@ -553,7 +554,7 @@ public void mousePressed() {
     float randomAngle = random(0, TWO_PI);
     
     // Initial boost parameters - super strong boost!
-    float xyBoost = random(800, 1500);    // XY plane strong boost (increased ~3x)
+    float xyBoost = random(800, 1200);    // XY plane strong boost (increased ~3x)
     float zBoost = random(4000, 8000);    // Z-axis super strong boost (increased 2x)
     
     // 33% chance to generate "explosive ball" - super strong initial boost
